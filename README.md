@@ -1,1 +1,2 @@
 # HOPE
+C++ BASIC CODE.
