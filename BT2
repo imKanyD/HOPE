@@ -1,0 +1,74 @@
+//Inclusão do Bluetooth
+#include <BluetoothSerial.h>
+BluetoothSerial SerialBT;
+
+#include <AFmotor.h>
+
+
+//Definição PORTAS ESP - PONTE H
+  #define ENA 14
+  #define MOTOR1F 12			//IN1
+  #define MOTOR1B 13			//IN2
+  #define MOTOR2F 27			//IN3
+  #define MOTOR2B 33			//IN4
+  #define ENB 32
+
+//Armazenamento Bluetooth
+char ENTRADA
+
+//Definição de PWM para testes.
+int POT = 255;
+
+void setup()
+  {
+    Serial.begin(9600); 
+    SerialBT.begin("HOPE"); //Nome do dispositivo
+    pinMode(MOTOR1F, OUTPUT);
+    pinMode(MOTOR1B, OUTPUT);
+    pinMode(MOTOR2F, OUTPUT);
+    pinMode(MOTOR2B, OUTPUT);
+    pinMode(SENSORD, INPUT);
+    pinMode(SENSORE, INPUT);
+    pinMode(TRIGGER, OUTPUT);
+    pinMode(ECHO,INPUT);
+    analogWrite(ENA, HIGH);
+    analogWrite(ENB, HIGH);
+  }
+
+void Bluetooth(){ 
+    if(Serial.available()>0){
+      ENTRADA = Serial.read(); //LEITURA DO CARACTER ENVIADO PELO APP
+
+      switch(entrada){
+        case 'F': //Frente
+        analogWrite(MOTOR1F,POT);
+        analogWrite(MOTOR1B,0);
+        analogWrite(MOTOR2F,POT);
+        analogWrite(MOTOR2B,0);
+        break;
+
+        case 'B': //Trás
+        analogWrite(MOTOR1F, 0);
+        analogWrite(MOTOR1B,POT);
+        analogWrite(MOTOR2F,0);
+        analogWrite(MOTOR2B,POT);
+        break;
+
+        case 'L': //Esquerda
+        analogWrite(MOTOR1F,POT);
+        analogWrite(MOTOR1B,0);
+        analogWrite(MOTOR2F,0);
+        analogWrite(MOTOR2B,0);
+        break;
+
+        case 'R': //Direita
+        analogWrite(MOTOR1F, 0);
+        analogWrite(MOTOR1B,0);
+        analogWrite(MOTOR2F,POT);
+        analogWrite(MOTOR2B,0);
+        break;
+
+
+      }
+    }
+  }
